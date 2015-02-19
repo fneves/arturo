@@ -59,7 +59,7 @@ module Arturo
           unless cache_is_current?(cache, features)
             features = Hash[Arturo::Feature.all.map { |f| [f.symbol.to_sym, f] }]
             mark_as_current!(cache)
-            cache.write("arturo.all", features, :expires_in => Arturo::Feature.cache_ttl * 10)
+            cache.write("arturo.all", features, :expires_in => (Arturo::Feature.cache_ttl * 10).seconds)
           end
 
           features[symbol] || Arturo::NoSuchFeature.new(symbol)
